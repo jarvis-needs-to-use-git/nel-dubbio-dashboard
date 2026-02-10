@@ -1,0 +1,8 @@
+streamlit
+requests
+pandas
+loguru
+pyyaml
+tenacity
+git+https://github.com/openpodcast/spotify-connector.git
+git+https://github.com/openpodcast/apple-connector.git
