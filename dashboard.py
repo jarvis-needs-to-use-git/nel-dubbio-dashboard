@@ -11,8 +11,13 @@ st.title("🎙️ Nel Dubbio Dashboard")
 data_path = os.path.join(os.path.dirname(__file__), "data.json")
 
 if not os.path.exists(data_path):
-    st.warning("No data found. Please run the harvester first.")
-    st.info("Ensure projects/podcast-dashboard/secrets.json is filled in correctly.")
+    st.warning("No data found locally.")
+    if st.button("🚀 Harvest Data Now"):
+        with st.spinner("Connecting to Spotify and Apple..."):
+            from harvester import harvest
+            harvest()
+            st.rerun()
+    st.info("Ensure secrets are configured in the Streamlit Cloud console.")
 else:
     with open(data_path, "r") as f:
         data = json.load(f)

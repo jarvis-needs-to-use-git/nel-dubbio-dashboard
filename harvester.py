@@ -9,8 +9,17 @@ def harvest():
     secrets_path = os.path.join(os.path.dirname(__file__), "secrets.json")
     data_path = os.path.join(os.path.dirname(__file__), "data.json")
 
-    with open(secrets_path, "r") as f:
-        secrets = json.load(f)
+    # Try local secrets first, then fall back to streamlit secrets (for cloud)
+    if os.path.exists(secrets_path):
+        with open(secrets_path, "r") as f:
+            secrets = json.load(f)
+    else:
+        try:
+            import streamlit as st
+            secrets = st.secrets
+        except:
+            print("No secrets found. Please provide secrets.json or set streamlit secrets.")
+            return
 
     results = {
         "timestamp": datetime.now().isoformat(),
